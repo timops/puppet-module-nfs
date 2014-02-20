@@ -7,8 +7,7 @@ define nfs::mkdir() {
     unless  => "test -d ${name}",
   }
 
-  file {
-    "${name}":
+  file { "${name}":
       ensure  => directory,
       require => Exec["mkdir_recurse_${name}"]
   }

@@ -70,7 +70,7 @@ This will export /data/folder on the server and automagically mount it on client
     nfs::server::export{ 
       '/media_library':
         ensure  => 'present',
-        nfstag     => 'media'
+        tag     => 'media'
         clients => '10.0.0.0/24(rw,insecure,async,no_root_squash) localhost(rw)'
   }
 
@@ -93,7 +93,7 @@ This will export /data/folder on the server and automagically mount it on client
   # also override mount point
   node media_client {
     include nfs::client
-    Nfs::Client::Mount &lt;&lt;|nfstag == 'media' | &gt;&gt; {
+    Nfs::Server::Mount &lt;&lt;|tag == 'media' | &gt;&gt; {
       ensure => 'mounted',
       mount  => '/import/media'
     }
@@ -206,7 +206,7 @@ This will export /data/folder on the server and automagically mount it on client
       bindmount => undef,    
       # Used to identify a catalog item for filtering by by
       # storeconfigs, kick ass.
-      nfstag     => undef,
+      tag     => undef,
       # copied directly into /etc/exports as a string, for simplicity
       clients => '10.0.0.0/24(rw,insecure,no_subtree_check,async,no_root_squash)'
   }

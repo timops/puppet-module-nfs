@@ -1,32 +1,13 @@
-# Debian specifix stuff
-class nfs::server::debian(
-  $nfs_v4 = false,
-  $nfs_v4_idmap_domain = undef
-) {
+# Debian specific stuff
+class nfs::server::debian {
 
-  class{ 'nfs::client::debian':
-    nfs_v4              => $nfs_v4,
-    nfs_v4_idmap_domain => $nfs_v4_idmap_domain,
-  }
+  class { 'nfs::client::debian': }
 
-  package { 'nfs-kernel-server':
-      ensure => 'installed',
-  }
+  package { 'nfs-kernel-server': ensure => 'installed' }
 
-  if $nfs_v4 == true {
-    service {
-      'nfs-kernel-server':
-        ensure    => running,
-        subscribe => [
-          Concat['/etc/exports'],
-          Augeas['/etc/idmapd.conf', '/etc/default/nfs-common']
-          ],
-    }
-  } else {
-    service {
-    'nfs-kernel-server':
-      ensure    => running,
-      subscribe => Concat['/etc/exports'],
-    }
-  }
+  # concat definition depends on this, and this depends on concat == DAG cycle.  Moved to server.pp to eliminate this problem.
+  #service { 'nfs-kernel-server':
+  #  ensure    => running,
+  #  subscribe => Concat['/etc/exports'],
+  #}
 }
