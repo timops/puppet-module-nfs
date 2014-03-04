@@ -7,6 +7,6 @@ summary 'nfs client and server module'
 description 'nfs client and server module'
 project_page 'https://github.com/timops/puppet-module-nfs'
 
-dependency 'puppetlabs-concat', '>= '1.0.2'
+dependency 'puppetlabs-concat', '>= 1.0.2'
 dependency 'puppetlabs-stdlib', '>= 3.0.1'
 
